@@ -1,54 +1,63 @@
-import { Route, Routes, Navigate, Link, Outlet } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Fragment } from 'react';
 
 import { publicRoutes, privateRoutes } from './routes';
-import { DefaultLayout } from './layouts/DefaultLayout';
-
-const Dashboard = () => {
-    return <div>Dashboard</div>;
-};
-
-function Admin() {
-    const auth = true;
-    return auth ? <Outlet /> : <Navigate to="/login" />;
-}
+import { DefaultLayout } from './layouts/home/DefaultLayout';
+import { DefaultLayoutAdmin } from './layouts/admin/DefaultLayout';
 
 function App() {
     return (
         <>
-            <nav>
-                <ul>
-                    {publicRoutes.map((item, index) => {
-                        return (
-                            <li key={index}>
-                                <Link to={item.path}> {item.title} </Link>
-                            </li>
-                        );
-                    })}
-                </ul>
-            </nav>
-
             <Routes>
-                {publicRoutes.map((item, index) => {
-                    const Page = item.component;
+                {publicRoutes.map((obj, index) => {
+                    const Page = obj.component;
                     let Layout = DefaultLayout;
 
-                    if (item.layout) {
-                        Layout = item.layout;
-                    } else if (item.layout === null) {
+                    if (obj.layout) {
+                        Layout = obj.layout;
+                    } else if (obj.layout === null) {
                         Layout = Fragment;
                     }
 
                     return (
                         <Route
                             key={index}
-                            path={item.path}
+                            path={obj.path}
                             element={
                                 <Layout>
                                     <Page />
                                 </Layout>
                             }
                         />
+                    );
+                })}
+
+                {privateRoutes.map((objs, indexs) => {
+                    return (
+                        <Route key={indexs} path={objs.path} element={<objs.component />}>
+                            {objs.listRoute.map((obj, index) => {
+                                const Page = obj.component;
+                                let Layout = DefaultLayoutAdmin;
+
+                                if (obj.layout) {
+                                    Layout = obj.layout;
+                                } else if (obj.layout === null) {
+                                    Layout = Fragment;
+                                }
+
+                                return (
+                                    <Route
+                                        key={index}
+                                        path={obj.path}
+                                        element={
+                                            <Layout>
+                                                <Page />
+                                            </Layout>
+                                        }
+                                    />
+                                );
+                            })}
+                        </Route>
                     );
                 })}
             </Routes>
