@@ -1,8 +1,17 @@
-import { Route, Routes, Navigate, Link } from 'react-router-dom';
+import { Route, Routes, Navigate, Link, Outlet } from 'react-router-dom';
 import { Fragment } from 'react';
 
-import { publicRoutes } from './routes';
+import { publicRoutes, privateRoutes } from './routes';
 import { DefaultLayout } from './layouts/DefaultLayout';
+
+const Dashboard = () => {
+    return <div>Dashboard</div>;
+};
+
+function Admin() {
+    const auth = true;
+    return auth ? <Outlet /> : <Navigate to="/login" />;
+}
 
 function App() {
     return (
