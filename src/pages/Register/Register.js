@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './Register.module.scss';
 import clsx from 'clsx';
@@ -37,6 +38,9 @@ function Register() {
                                     </a>
                                 </fieldset>
                             </form>
+                        </div>
+                        <div className={clsx('panel-body', cx('center-login'))}>
+                            <Link to="/login">Log-in</Link>to{' '}
                         </div>
                     </div>
                 </div>

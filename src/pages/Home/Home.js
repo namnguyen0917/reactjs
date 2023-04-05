@@ -1,9 +1,9 @@
-function Login() {
+function Home() {
     return (
         <>
-            <div>Login</div>
+            <div>Home</div>
         </>
     );
 }
 
-export default Login;
+export default Home;
