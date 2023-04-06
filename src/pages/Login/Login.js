@@ -38,7 +38,7 @@ function Login() {
                         </div>
 
                         <div className={clsx('panel-body', cx('center-login'))}>
-                            <Link to="/register">Create account</Link>to{' '}
+                            <Link to="/register">Create account</Link>
                         </div>
                     </div>
                 </div>
