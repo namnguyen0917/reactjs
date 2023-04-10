@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 import classNames from 'classnames/bind';
 import styles from './Register.module.scss';
@@ -28,14 +29,14 @@ function Register() {
     const [messagers, setMessager] = useState([]);
 
     async function registerUser(credentials) {
-        // return fetch('http://localhost:3000/login', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(credentials),
-        // }).then((data) => data.json());
-        console.log(credentials);
+        return axios
+            .post('http://localhost:3000/login', credentials)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     const handleSubmit = async (e) => {
@@ -46,6 +47,7 @@ function Register() {
 
         if (username.length < 6 || username.length > 24) {
             _checkStatus = false;
+
             setMessager((messager) => [...messager, 'At least 6 and no more than 24 characters']);
         }
 
@@ -60,13 +62,16 @@ function Register() {
             setMessager((messager) => [...messager, 'Password is not match']);
         }
 
+        let token;
+
         if (_checkStatus) {
-            const token = await registerUser({
+            token = await registerUser({
                 username,
                 email,
                 password,
             });
         }
+        console.log(token);
     };
 
     return (
